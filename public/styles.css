@@ -1,0 +1,12 @@
+#divBoard {
+    width: 400px;
+    height: 400px;
+}
+
+.chess-square {
+    float: left;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    cursor: pointer;
+}

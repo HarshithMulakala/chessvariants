@@ -101,57 +101,29 @@ ws.onmessage = message => {
         while (divBoard.firstChild != null)
             divBoard.removeChild(divBoard.firstChild)
 
-        var countNum = 1;
-        for (var i = 0; i < 8; i++) {
-            for (var j = 0; j < 8; j++) {
-                var chessSquare = document.createElement('div');
-                chessSquare.className = 'chess-square';
-                chessSquare.id = "ball" + (countNum);
-                chessSquare.tag = countNum;
-                chessSquare.textContent = countNum;
-                if ((i + j) % 2 == 0) {
-                    chessSquare.style.backgroundColor = 'blue';
+
+
+        for (let i = 0; i < game.balls; i++) {
+
+            const b = document.createElement("button");
+            b.id = "ball" + (i + 1);
+            b.tag = i + 1
+            b.textContent = i + 1
+            b.style.width = "150px"
+            b.style.height = "150px"
+            b.addEventListener("click", e => {
+                b.style.background = playerColor
+                const payLoad = {
+                    "method": "play",
+                    "clientId": clientId,
+                    "gameId": gameId,
+                    "ballId": b.tag,
+                    "color": playerColor
                 }
-                else {
-                    chessSquare.style.backgroundColor = 'red';
-                }
-                chessSquare.addEventListener("click", e => {
-                    chessSquare.style.background = playerColor;
-                    console.log(chessSquare.tag);
-                    const payLoad = {
-                        "method": "play",
-                        "clientId": clientId,
-                        "gameId": gameId,
-                        "ballId": chessSquare.tag,
-                        "color": playerColor
-                    }
-                    ws.send(JSON.stringify(payLoad))
-                })
-                divBoard.appendChild(chessSquare);
-                countNum++;
-            }
+                ws.send(JSON.stringify(payLoad))
+            })
+            divBoard.appendChild(b);
         }
 
-//         for (let i = 0; i < game.balls; i++) {
-
-//             const b = document.createElement("button");
-//             b.id = "ball" + (i + 1);
-//             b.tag = i + 1
-//             b.textContent = i + 1
-//             b.style.width = "150px"
-//             b.style.height = "150px"
-//             b.addEventListener("click", e => {
-//                 b.style.background = playerColor
-//                 const payLoad = {
-//                     "method": "play",
-//                     "clientId": clientId,
-//                     "gameId": gameId,
-//                     "ballId": b.tag,
-//                     "color": playerColor
-//                 }
-//                 ws.send(JSON.stringify(payLoad))
-//             })
-//             divBoard.appendChild(b);
-//         }
-//     }
-// }
+    }
+}
